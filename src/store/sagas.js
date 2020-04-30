@@ -15,6 +15,20 @@ function apiGet(text, length) {
   });
 }
 
+function apiGetTodoList(text, length) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, text: "fazer café" },
+        { id: 2, text: "estudar" },
+        { id: 3, text: "let" },
+        { id: 4, text: "programar" },
+        { id: 5, text: "jogar" },
+      ]);
+    }, 2000);
+  });
+}
+
 function* asyncAddTodo(action) {
   try {
     const todos = yield select((state) => state.todos);
@@ -31,8 +45,20 @@ function* asyncAddTodo(action) {
   }
 }
 
+function* getTodoList() {
+  try {
+    const response = yield call(apiGetTodoList);
+    yield put({
+      type: "SUCCESS_TODO_LIST",
+      payload: { data: response },
+    });
+  } catch (error) {
+    yield put({
+      type: "FAILURE_TODO_LIST",
+    });
+  }
+}
+
 export default function* root() {
-  yield [takeEvery("ASYNC_ADD_TODO", asyncAddTodo)];
-  yield [take("ASYNC_ADD_TODO", asyncAddTodo)];
-  yield [takeLatest("ASYNC_ADD_TODO", asyncAddTodo)];
+  yield [takeEvery("REQUEST_TODO_LIST", getTodoList)];
 }

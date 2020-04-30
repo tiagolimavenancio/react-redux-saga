@@ -7,7 +7,7 @@ import "./styles.css";
 
 function TodoList(props) {
   const [name, setName] = useState("");
-  const { todos, addTodo, toggleTodo, removeTodo } = props;
+  const { todos, addTodo, requestTodoList, toggleTodo, removeTodo } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,9 +24,12 @@ function TodoList(props) {
           onChange={(e) => setName(e.target.value)}
         />
         <button type="submit">Novo</button>
+        <button type="button" onClick={() => requestTodoList()}>
+          Carregar
+        </button>
       </form>
       <ul>
-        {todos.map((todo) => (
+        {todos.data.map((todo) => (
           <li key={todo.id}>
             {todo.complete ? <s>{todo.text}</s> : todo.text}
             <div>
