@@ -1,12 +1,17 @@
 import React from "react";
 import { Provider } from "react-redux";
-import TodoList from "./components/TodoList";
+import Button from "./components/Button";
+import NewsItem from "./components/NewsItem";
+import Loading from "./components/Loading";
+
 import store from "./store";
 
 function App() {
   return (
     <Provider store={store}>
-      <TodoList />
+      <Button />
+      <Loading />
+      <NewsItem />
     </Provider>
   );
 }
